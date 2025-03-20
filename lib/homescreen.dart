@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:payment_getway/uddoktaPay/customCard.dart';
-import 'package:uddoktapay/models/customer_model.dart';
-import 'package:uddoktapay/models/request_response.dart';
-import 'package:uddoktapay/uddoktapay.dart';
+import 'package:payment_getway/uddoktaPay/customerModel.dart';
+import 'package:payment_getway/uddoktaPay/paymentSearvice.dart';
+import 'package:uddoktapay/models/customer_model.dart';  // Ensure correct import
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -28,7 +28,8 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           GestureDetector(
             onTap: () {
-              uddoktaPay();
+              initiateUddoktaPayment(context);
+              print('Click');
             },
             child: CustomCard(
               text: 'Uddokta Payment',
@@ -40,24 +41,16 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void uddoktaPay() async {
-    final response =await UddoktaPay.createPayment(
-      context: Get.context!,
-      customer: CustomerDetails(fullName: 'Mahafujer Rahman', email: 'mahafuj@gmail.com'),
-      amount: totalPrice.toString()
+  void initiateUddoktaPayment(BuildContext context) {
+    final customer = CustomerInfo(
+      fullName: 'Mahafujer Rahman',
+      email: 'mahafuj@gmail.com',
     );
-    if (response.status == ResponseStatus.completed){
-      print ('Payment completed, Trx Id - ${response.transactionId}');
-      print (response.senderNumber);
-    }
-    if (response.status == ResponseStatus.canceled){
-      print ('Payment canceled');
-    }
-    if (response.status == ResponseStatus.pending){
-      print ('Payment pending');
-    }
+
+    PaymentService().initiatePayment(
+      context: context,
+      customer: customer,
+      amount: totalPrice,
+    );
   }
-
-
-
 }
