@@ -22,7 +22,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
-        title: Text('Gateway Payment', style: TextStyle(color: Colors.white)),
+        title: Text('Gateway Payments', style: TextStyle(color: Colors.white)),
       ),
       body: Column(
         children: [
