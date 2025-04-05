@@ -19,8 +19,8 @@ class PaymentService {
         'amount': amount.toString(),
       };
 
-      final response = await http.post(
-        Uri.parse(apiUrl),
+
+      final response = await http.post(Uri.parse(apiUrl),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $apiKey',
